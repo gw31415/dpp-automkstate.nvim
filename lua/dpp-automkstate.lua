@@ -38,11 +38,12 @@ local function watch(parent)
 						waiting = waiting - 1
 						if waiting == 0 and locker then
 							vim.api.nvim_del_autocmd(locker)
+							locker = nil
 						end
 					end,
 				})
 
-				if waiting == 1 then -- First time ( because after increment )
+				if waiting == 1 then -- First time (because after increment)
 					-- Locking for Dpp:makeStatePost event
 					locker = vim.api.nvim_create_autocmd('VimLeave', {
 						callback = function()
