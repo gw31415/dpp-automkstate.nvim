@@ -42,8 +42,8 @@ local function watch(parent)
 					end,
 				})
 
-				-- Locking for Dpp:makeStatePost event
 				if waiting == 1 then -- First time ( because after increment )
+					-- Locking for Dpp:makeStatePost event
 					locker = vim.api.nvim_create_autocmd('VimLeave', {
 						callback = function()
 							vim.cmd 'echo "dpp-automkstate: state making...."'
@@ -54,6 +54,7 @@ local function watch(parent)
 							end
 						end
 					})
+
 					require 'dpp'.make_state(unpack(mkstate_args))
 				else -- waiting == 2 (Second time)
 					vim.api.nvim_create_autocmd('User', {
