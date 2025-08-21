@@ -51,8 +51,13 @@ local function watch(parent)
 							vim.cmd 'echo "dpp-automkstate: state making...."'
 
 							-- Polling for Dpp:makeStatePost event
-							while waiting > 0 do
+							local try = 20
+							while waiting > 0 and try > 0 do
 								vim.wait(100)
+								try = try - 1
+							end
+							if try == 0 then
+								vim.cmd 'echoerr "dpp-automkstate: Timeout while waiting for Dpp:makeStatePost event"'
 							end
 						end
 					})
