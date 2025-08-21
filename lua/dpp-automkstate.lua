@@ -15,8 +15,9 @@ local function watch(parent)
 		return
 	end
 
-	local parent_realpath = vim.uv.fs_realpath(parent)
-	if vim.uv.fs_stat(parent_realpath).type == 'directory' then
+	local parent_realpath = vim.uv.fs_realpath(parent) or ''
+	local parent_stat = vim.uv.fs_stat(parent_realpath)
+	if parent_stat and parent_stat.type == 'directory' then
 		parent_realpath = parent_realpath .. '/'
 	end
 
